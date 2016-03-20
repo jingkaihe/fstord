@@ -40,3 +40,15 @@ func TestFilterSlice(t *testing.T) {
 		}
 	}
 }
+
+func TestFilterEmptySlice(t *testing.T) {
+	slice := []int{}
+
+	result := Filter(slice, func(i int) bool {
+		return i%2 == 1
+	}).([]int)
+
+	if len(result) != 0 {
+		t.Fatalf("expected %v to be empty", result)
+	}
+}

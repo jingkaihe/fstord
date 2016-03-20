@@ -44,3 +44,15 @@ func TestMapSlice(t *testing.T) {
 		}
 	}
 }
+
+func TestMapEmptySlice(t *testing.T) {
+	slice := []int{}
+
+	result := Map(slice, func(x int) int {
+		return x * x
+	}).([]int)
+
+	if len(result) != 0 {
+		t.Fatalf("expected %v to be empty", result)
+	}
+}
