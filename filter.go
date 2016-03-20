@@ -5,9 +5,9 @@ import (
 	"reflect"
 )
 
-// Filter the mapable - returns the elements for which fun returns true
-func Filter(mapable, fun interface{}) interface{} {
-	mvs := reflect.ValueOf(mapable)
+// Filter the enumerable - returns the elements for which fun returns true
+func Filter(enumerable, fun interface{}) interface{} {
+	mvs := reflect.ValueOf(enumerable)
 	fv := reflect.ValueOf(fun)
 
 	switch mvs.Kind() {
