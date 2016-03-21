@@ -53,3 +53,19 @@ func TestReduceEmptySlice(t *testing.T) {
 		t.Fatalf("expected %v to eq %v", expected, result)
 	}
 }
+
+func TestReduceMap(t *testing.T) {
+	mp := map[int]string{
+		1: "abc",
+		2: "eft",
+		3: "hij",
+	}
+
+	expected := 6
+
+	result := Reduce(mp, func(s, k int, v string) int { return s + k }, 0).(int)
+
+	if result != expected {
+		t.Fatalf("expected %v to eq %v", expected, result)
+	}
+}

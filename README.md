@@ -34,15 +34,18 @@ fstord.Map(mp, func(a, b int) string {
 fstord.Filter(mp, func(a b int) bool { return a+b==3})
 # => {1: 2}
 
-fstord.Reduce([]int{1, 2, 3, 4}, func(acc, i int) int { return acc+i }, 0)
+fstord.Reduce([]int{1, 2, 3, 4}, func(acc, i int) int { return acc+i }, 0).(int)
 # => 10
+
+fstord.Reduce(mp, func(a, k, v int) int { return a + v }, 0).(int)
+# => 12
 ```
 
 ## TODO
 
 - [x] Map
 - [x] Filter
-- [ ] Reduce (map data structure support hasn't been done yet)
+- [x] Reduce
 - [ ] Any
 - [ ] Every
 - [ ] Count
