@@ -13,7 +13,7 @@ func Filter(enumerable, fun interface{}) interface{} {
 	switch mvs.Kind() {
 	case reflect.Slice:
 		et := mvs.Type().Elem()
-		if !validFilterFun(fv, et) {
+		if !validBoolFun(fv, et) {
 			panic(fmt.Sprintf("%s is not a valid type for fun %s", et, fv))
 		}
 
@@ -28,7 +28,7 @@ func Filter(enumerable, fun interface{}) interface{} {
 		kt := mvs.Type().Key()
 		et := mvs.Type().Elem()
 		mapType := mvs.Type()
-		if !validFilterFun(fv, kt, et) {
+		if !validBoolFun(fv, kt, et) {
 			panic(fmt.Sprintf("func (%s, %s) -> %s is invalid for filter", kt, et, fv.Type()))
 		}
 		rt := reflect.MakeMap(mapType)
@@ -45,6 +45,6 @@ func Filter(enumerable, fun interface{}) interface{} {
 	}
 }
 
-func validFilterFun(fun reflect.Value, types ...reflect.Type) bool {
+func validBoolFun(fun reflect.Value, types ...reflect.Type) bool {
 	return validFun(fun, types...) && fun.Type().Out(0).Kind() == reflect.Bool
 }

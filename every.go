@@ -5,8 +5,8 @@ import (
 	"reflect"
 )
 
-// Any Returns whether any elements of a slice/map return true when invoke fun
-func Any(enumerable, fun interface{}) bool {
+// Every returns whether all the elements of a slice/map return true when invoke fun
+func Every(enumerable, fun interface{}) bool {
 	mvs := reflect.ValueOf(enumerable)
 	fv := reflect.ValueOf(fun)
 
@@ -19,11 +19,11 @@ func Any(enumerable, fun interface{}) bool {
 
 		for i := 0; i < mvs.Len(); i++ {
 			res := fv.Call([]reflect.Value{mvs.Index(i)})[0]
-			if res.Bool() == true {
-				return true
+			if res.Bool() == false {
+				return false
 			}
 		}
-		return false
+		return true
 	case reflect.Map:
 		kt := mvs.Type().Key()
 		et := mvs.Type().Elem()
@@ -33,12 +33,12 @@ func Any(enumerable, fun interface{}) bool {
 
 		for _, k := range mvs.MapKeys() {
 			v := fv.Call([]reflect.Value{k, mvs.MapIndex(k)})[0]
-			if v.Bool() == true {
-				return true
+			if v.Bool() == false {
+				return false
 			}
 		}
 
-		return false
+		return true
 	default:
 		panic(fmt.Sprintf("%s does not support Map", mvs.Type()))
 	}
