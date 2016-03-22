@@ -5,9 +5,8 @@ import (
 	"reflect"
 )
 
-// Every returns whether all the elements of a slice/map return true when invoke fun
-// How the code works is kind like the Any func, but IMO is a good duplication
-func Every(enumerable, fun interface{}) bool {
+// Count returns the number of elements of a slice/map that return true when invoke fun
+func Count(enumerable, fun interface{}) int {
 	mvs := reflect.ValueOf(enumerable)
 	fv := reflect.ValueOf(fun)
 
@@ -18,13 +17,14 @@ func Every(enumerable, fun interface{}) bool {
 			panic(fmt.Sprintf("%s is not a valid type for fun %s", et, fv))
 		}
 
+		cnt := 0
 		for i := 0; i < mvs.Len(); i++ {
 			res := fv.Call([]reflect.Value{mvs.Index(i)})[0]
-			if res.Bool() == false {
-				return false
+			if res.Bool() == true {
+				cnt++
 			}
 		}
-		return true
+		return cnt
 	case reflect.Map:
 		kt := mvs.Type().Key()
 		et := mvs.Type().Elem()
@@ -32,15 +32,16 @@ func Every(enumerable, fun interface{}) bool {
 			panic(fmt.Sprintf("func %s is invalid", fun))
 		}
 
+		cnt := 0
 		for _, k := range mvs.MapKeys() {
 			v := fv.Call([]reflect.Value{k, mvs.MapIndex(k)})[0]
-			if v.Bool() == false {
-				return false
+			if v.Bool() == true {
+				cnt++
 			}
 		}
 
-		return true
+		return cnt
 	default:
-		panic(fmt.Sprintf("%s does not support Every", mvs.Type()))
+		panic(fmt.Sprintf("%s does not support Count", mvs.Type()))
 	}
 }

@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-// Any Returns whether any elements of a slice/map return true when invoke fun
+// Any returns whether any elements of a slice/map return true when invoke fun
 func Any(enumerable, fun interface{}) bool {
 	mvs := reflect.ValueOf(enumerable)
 	fv := reflect.ValueOf(fun)
@@ -40,6 +40,6 @@ func Any(enumerable, fun interface{}) bool {
 
 		return false
 	default:
-		panic(fmt.Sprintf("%s does not support Map", mvs.Type()))
+		panic(fmt.Sprintf("%s does not support Any", mvs.Type()))
 	}
 }

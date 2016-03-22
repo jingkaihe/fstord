@@ -40,7 +40,7 @@ func Reduce(enumerable, fun, initial interface{}) interface{} {
 
 		return rt.Interface()
 	default:
-		panic(fmt.Sprintf("%s does not support Map", mvs.Type()))
+		panic(fmt.Sprintf("%s does not support Reduce", mvs.Type()))
 	}
 }
 
