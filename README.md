@@ -11,7 +11,6 @@ fstord (read [First Order](https://en.wikipedia.org/wiki/First_Order_(Star_Wars)
 
 ```go
 
-
 slice := []int{1, 2, 3, 4, 5}
 
 fstord.Map(slice, func(x int) int { return x*x }).([]int)
@@ -39,6 +38,9 @@ fstord.Reduce([]int{1, 2, 3, 4}, func(acc, i int) int { return acc+i }, 0).(int)
 
 fstord.Reduce(mp, func(a, k, v int) int { return a + v }, 0).(int)
 # => 12
+
+fstord.Any([]int{1, 2, 3, 4}, func(i int) bool { return i > 4 })
+# => false
 ```
 
 ## TODO
@@ -46,7 +48,7 @@ fstord.Reduce(mp, func(a, k, v int) int { return a + v }, 0).(int)
 - [x] Map
 - [x] Filter
 - [x] Reduce
-- [ ] Any
+- [x] Any
 - [ ] Every
 - [ ] Count
 - [ ] FilterMap
