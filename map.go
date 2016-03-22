@@ -8,39 +8,39 @@ import (
 // Map Returns a slice/map where each element is the result of invoking
 // fun on each corresponding element of slice/map
 func Map(enumerable, fun interface{}) interface{} {
-	mvs := reflect.ValueOf(enumerable)
+	enums := reflect.ValueOf(enumerable)
 	fv := reflect.ValueOf(fun)
 
-	switch mvs.Kind() {
+	switch enums.Kind() {
 	case reflect.Slice:
-		et := mvs.Type().Elem()
+		et := enums.Type().Elem()
 		if !validFun(fv, et) {
 			panic(fmt.Sprintf("%s is not a valid type for fun %s", et, fv))
 		}
 
-		rt := reflect.MakeSlice(reflect.SliceOf(fv.Type().Out(0)), mvs.Len(), mvs.Len())
-		for i := 0; i < mvs.Len(); i++ {
-			cs := fv.Call([]reflect.Value{mvs.Index(i)})[0]
+		rt := reflect.MakeSlice(reflect.SliceOf(fv.Type().Out(0)), enums.Len(), enums.Len())
+		for i := 0; i < enums.Len(); i++ {
+			cs := fv.Call([]reflect.Value{enums.Index(i)})[0]
 			rt.Index(i).Set(cs)
 		}
 		return rt.Interface()
 	case reflect.Map:
-		kt := mvs.Type().Key()
-		et := mvs.Type().Elem()
+		kt := enums.Type().Key()
+		et := enums.Type().Elem()
 		mapType := reflect.MapOf(kt, fv.Type().Out(0))
 		if !validFun(fv, kt, et) || mapType.Kind() != reflect.Map {
 			panic(fmt.Sprintf("func (%s, %s) -> %s type is invalid", kt, et, mapType))
 		}
 		rt := reflect.MakeMap(mapType)
 
-		for _, k := range mvs.MapKeys() {
-			v := fv.Call([]reflect.Value{k, mvs.MapIndex(k)})[0]
+		for _, k := range enums.MapKeys() {
+			v := fv.Call([]reflect.Value{k, enums.MapIndex(k)})[0]
 			rt.SetMapIndex(k, v)
 		}
 
 		return rt.Interface()
 	default:
-		panic(fmt.Sprintf("%s does not support Map", mvs.Type()))
+		panic(fmt.Sprintf("%s does not support Map", enums.Type()))
 	}
 }
 

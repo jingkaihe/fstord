@@ -8,39 +8,39 @@ import (
 // Reduce for each element in the enumerable. The accumulated and element
 // are passed into fun as arguments.
 func Reduce(enumerable, fun, initial interface{}) interface{} {
-	mvs := reflect.ValueOf(enumerable)
+	enums := reflect.ValueOf(enumerable)
 	fv := reflect.ValueOf(fun)
 	it := reflect.ValueOf(initial)
 
-	switch mvs.Kind() {
+	switch enums.Kind() {
 	case reflect.Slice:
-		et := mvs.Type().Elem()
+		et := enums.Type().Elem()
 		if !validReduceFun(fv, it.Type(), et, it.Type()) {
 			panic(fmt.Sprintf("fun %s is not a valid type", fun))
 		}
 
 		rt := it
-		for i := 0; i < mvs.Len(); i++ {
-			rt = fv.Call([]reflect.Value{rt, mvs.Index(i)})[0]
+		for i := 0; i < enums.Len(); i++ {
+			rt = fv.Call([]reflect.Value{rt, enums.Index(i)})[0]
 		}
 		return rt.Interface()
 	case reflect.Map:
-		kt := mvs.Type().Key()
-		et := mvs.Type().Elem()
+		kt := enums.Type().Key()
+		et := enums.Type().Elem()
 
 		if !validReduceFun(fv, it.Type(), kt, et, it.Type()) {
 			panic(fmt.Sprintf("fun %s is not a valid type for map enumeration", fun))
 		}
 
 		rt := it
-		for _, k := range mvs.MapKeys() {
-			v := mvs.MapIndex(k)
+		for _, k := range enums.MapKeys() {
+			v := enums.MapIndex(k)
 			rt = fv.Call([]reflect.Value{rt, k, v})[0]
 		}
 
 		return rt.Interface()
 	default:
-		panic(fmt.Sprintf("%s does not support Reduce", mvs.Type()))
+		panic(fmt.Sprintf("%s does not support Reduce", enums.Type()))
 	}
 }
 
