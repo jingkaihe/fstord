@@ -1,4 +1,4 @@
-# fstord (WIP)
+# fstord
 ===
 
 fstord (read [First Order](https://en.wikipedia.org/wiki/First_Order_(Star_Wars)) - yeah you're right) is a package that implemented [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function).
