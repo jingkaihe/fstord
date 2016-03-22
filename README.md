@@ -48,14 +48,3 @@ fstord.Every([]int{1, 3, 5}, func(i int) bool { return i%2 == 1 })
 fstord.Count([]int{1, 2, 3, 4, 5}, func(i int) bool { return i%2 == 1 })
 # => 3
 ```
-
-## TODO
-
-- [x] Map
-- [x] Filter
-- [x] Reduce
-- [x] Any
-- [x] Every
-- [x] Count
-
-And more? Just comment!
