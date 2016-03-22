@@ -7,8 +7,7 @@ import (
 
 // Count returns the number of elements of a slice/map that return true when invoke fun
 func Count(enumerable, fun interface{}) int {
-	enums := reflect.ValueOf(enumerable)
-	fv := reflect.ValueOf(fun)
+	enums, fv := preFetchValues(enumerable, fun)
 
 	switch enums.Kind() {
 	case reflect.Slice:

@@ -8,8 +8,7 @@ import (
 // Every returns whether all the elements of a slice/map return true when invoke fun
 // How the code works is kind like the Any func, but IMO is a good duplication
 func Every(enumerable, fun interface{}) bool {
-	enums := reflect.ValueOf(enumerable)
-	fv := reflect.ValueOf(fun)
+	enums, fv := preFetchValues(enumerable, fun)
 
 	switch enums.Kind() {
 	case reflect.Slice:

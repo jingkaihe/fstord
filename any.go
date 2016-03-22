@@ -7,8 +7,7 @@ import (
 
 // Any returns whether any elements of a slice/map return true when invoke fun
 func Any(enumerable, fun interface{}) bool {
-	enums := reflect.ValueOf(enumerable)
-	fv := reflect.ValueOf(fun)
+	enums, fv := preFetchValues(enumerable, fun)
 
 	switch enums.Kind() {
 	case reflect.Slice:

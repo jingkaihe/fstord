@@ -8,8 +8,7 @@ import (
 // Reduce for each element in the enumerable. The accumulated and element
 // are passed into fun as arguments.
 func Reduce(enumerable, fun, initial interface{}) interface{} {
-	enums := reflect.ValueOf(enumerable)
-	fv := reflect.ValueOf(fun)
+	enums, fv := preFetchValues(enumerable, fun)
 	it := reflect.ValueOf(initial)
 
 	switch enums.Kind() {

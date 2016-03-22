@@ -8,8 +8,7 @@ import (
 // Map Returns a slice/map where each element is the result of invoking
 // fun on each corresponding element of slice/map
 func Map(enumerable, fun interface{}) interface{} {
-	enums := reflect.ValueOf(enumerable)
-	fv := reflect.ValueOf(fun)
+	enums, fv := preFetchValues(enumerable, fun)
 
 	switch enums.Kind() {
 	case reflect.Slice:

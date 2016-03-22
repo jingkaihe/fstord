@@ -7,8 +7,7 @@ import (
 
 // Filter the enumerable - returns the elements for which fun returns true
 func Filter(enumerable, fun interface{}) interface{} {
-	enums := reflect.ValueOf(enumerable)
-	fv := reflect.ValueOf(fun)
+	enums, fv := preFetchValues(enumerable, fun)
 
 	switch enums.Kind() {
 	case reflect.Slice:
